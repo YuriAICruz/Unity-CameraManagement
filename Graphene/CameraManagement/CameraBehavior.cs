@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Graphene.CameraManagement
 {
-    public class CameraBehavior : MonoBehaviour
+    public class CameraBehavior : MonoBehaviour, ICameraBehavior
     {
+        public event Action BlockScene;
+        public event Action UnblockScene;
+        
         private Transform _target;
 
         public float Speed;
