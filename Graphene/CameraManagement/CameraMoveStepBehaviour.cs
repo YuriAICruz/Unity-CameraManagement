@@ -64,8 +64,6 @@ namespace Graphene.CameraManagement
             var tlDir =  _target.position - TopLeft;
             var brDir = _target.position - BottonRight;
 
-            Debug.Log($"{TopLeft}-{tlDir} {BottonRight}-{brDir}");
-
             if (tlDir.x > 0)
             {
                 StartCoroutine(MoveTo(new Vector3Int(1, 0, 0)));
