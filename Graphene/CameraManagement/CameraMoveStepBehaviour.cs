@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using Vuforia;
 
 namespace Graphene.CameraManagement
 {
