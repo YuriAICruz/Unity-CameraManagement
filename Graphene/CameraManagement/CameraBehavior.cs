@@ -10,7 +10,7 @@ namespace Graphene.CameraManagement
         public event Action BlockScene;
         public event Action UnblockScene;
         
-        private Transform _target;
+        protected Transform _target;
 
         public float Speed;
         private Vector3 _position;
@@ -23,7 +23,7 @@ namespace Graphene.CameraManagement
         private Coroutine _routine;
         private float _maxDistance = 200; 
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _levelMask |= 1 << LayerMask.NameToLayer("Level");
         }
@@ -33,13 +33,13 @@ namespace Graphene.CameraManagement
             _volumes = FindObjectsOfType<CameraBehaviorVolume>().ToList();
         }
 
-        public void SetTarget(Transform target)
+        public virtual void SetTarget(Transform target)
         {
             _target = target;
             _position = _target.position;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (_target == null) return;
 
@@ -90,7 +90,7 @@ namespace Graphene.CameraManagement
             transform.position = pos;
         }
         
-        private void FollowTarget()
+        protected virtual void FollowTarget()
         {
             var dir = (_target.position - _position);
 
@@ -125,8 +125,19 @@ namespace Graphene.CameraManagement
 
             return false;
         }
+        
+        protected void CheckCollision()
+        {
+            var dir = transform.position - _target.position;
 
-        private void CheckOcclusion()
+            RaycastHit hit;
+            if (UnityEngine.Physics.Raycast(_target.position, dir, out hit, dir.magnitude, _levelMask))
+            {
+                transform.position = hit.point;
+            }
+        }
+
+        protected void CheckOcclusion()
         {
             var dir = transform.position - _target.position;
 
